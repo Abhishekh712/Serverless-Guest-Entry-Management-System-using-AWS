@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guestbook Entry</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #msg {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <form id="guestForm">
+    <h2>Guest Entry</h2>
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <textarea id="purpose" placeholder="Purpose" required></textarea>
+    <button type="submit">Submit</button>
+    <div id="msg"></div>
+  </form>
+
+  <script>
+    const apiUrl = "https://jq81kaoj86.execute-api.ap-south-1.amazonaws.com/dev/addGuestentry"; // <-- Replace this with your Invoke URL + route
+
+    document.getElementById("guestForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const purpose = document.getElementById("purpose").value;
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, purpose }),
+      });
+
+      const msgDiv = document.getElementById("msg");
+      if (response.ok) {
+        msgDiv.textContent = "Entry added successfully!";
+        msgDiv.style.color = "green";
+        e.target.reset();
+      } else {
+        msgDiv.textContent = "Error submitting entry.";
+        msgDiv.style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>
