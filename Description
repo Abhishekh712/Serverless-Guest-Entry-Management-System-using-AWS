@@ -1,0 +1,8 @@
+Developed a serverless guest entry management system using AWS Lambda, API Gateway, and DynamoDB.
+
+Designed and deployed a REST API to add guest entries to a DynamoDB table.
+
+Integrated frontend HTML form with AWS API Gateway endpoint for real-time data submission.
+
+Implemented secure IAM policies and enabled CORS for cross-origin requests.
+
